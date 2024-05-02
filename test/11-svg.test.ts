@@ -5,31 +5,30 @@ import { generate, generateQrCode, generateSvg } from '../src/index'
 describe('QR Code as a SVG', () => {
   it('should generate a SVG QR code for a simple message', async () => {
     const code = generateQrCode('foo')
-    const svg = await generateSvg(code, { margin: 0 })
+    const svg = await generateSvg(code)
 
     expect(svg).toEqual([
-      '<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29">',
       '<path d="',
-      /* */ 'M0 0h7v7h-7zM11 0h2v1h-1v1h-1zM14 0h7v7h-7zM1 1v5h5v-5zM9 1h1v2h-',
-      /* */ '1v2h1v1h-1v1h1v-1h1v2h1v1h2v-1h5v1h-1v2h1v1h-2v-3h-2v1h1v1h-1v1h-',
-      /* */ '2v2h-1v-2h-2v1h-1v-1h-2v-1h1v-1h3v1h1v-1h-1v-1h-1v-1h-2v-6h1zM15 ',
-      /* */ '1v5h5v-5zM2 2h3v3h-3zM12 2h1v3h-1zM16 2h3v3h-3zM11 5h1v1h-1zM12 6',
-      /* */ 'h1v1h-1zM0 8h1v1h1v-1h5v1h-3v1h1v1h-3v1h-1v-1h-1zM7 9h1v1h-1zM20 ',
-      /* */ '9h1v1h-1zM6 10h1v1h-1zM13 10v1h1v-1zM19 10h1v1h-1zM20 11h1v1h-1zM',
-      /* */ '0 12h1v1h-1zM2 12h2v1h-2zM5 12h2v1h-2zM15 12h1v2h-1zM19 12h1v1h-1',
-      /* */ 'zM8 13h1v1h-1zM10 13h1v1h-1zM17 13h1v2h-1v2h-1v-1h-1v-1h1v-1h1zM2',
-      /* */ '0 13h1v1h-1zM0 14h7v7h-7zM11 14h1v1h-1zM13 14h1v1h-1zM19 14h1v1h1',
-      /* */ 'v1h-2v1h-1v-2h1zM1 15v5h5v-5zM8 15h2v2h-1v2h-1zM2 16h3v3h-3zM11 1',
-      /* */ '6h1v1h1v-1h1v1h1v1h1v1h-1v1h-2v1h-1v-1h-1v1h-3v-1h1v-1h3v-1h-1zM1',
-      /* */ '7 17h1v1h-1zM13 18v1h1v-1zM17 19h1v1h-1zM15 20h1v1h-1zM18 20h2v1h',
-      /* */ '-2z',
-      '"/>',
+      /* */ 'M4 4h7v7h-7zM15 4h2v1h-1v1h-1zM18 4h7v7h-7zM5 5v5h5v-5zM13 5h1v2h',
+      /* */ '-1v2h1v1h-1v1h1v-1h1v2h1v1h2v-1h5v1h-1v2h1v1h-2v-3h-2v1h1v1h-1v1h',
+      /* */ '-2v2h-1v-2h-2v1h-1v-1h-2v-1h1v-1h3v1h1v-1h-1v-1h-1v-1h-2v-6h1zM19',
+      /* */ ' 5v5h5v-5zM6 6h3v3h-3zM16 6h1v3h-1zM20 6h3v3h-3zM15 9h1v1h-1zM16 ',
+      /* */ '10h1v1h-1zM4 12h1v1h1v-1h5v1h-3v1h1v1h-3v1h-1v-1h-1zM11 13h1v1h-1',
+      /* */ 'zM24 13h1v1h-1zM10 14h1v1h-1zM17 14v1h1v-1zM23 14h1v1h-1zM24 15h1',
+      /* */ 'v1h-1zM4 16h1v1h-1zM6 16h2v1h-2zM9 16h2v1h-2zM19 16h1v2h-1zM23 16',
+      /* */ 'h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM21 17h1v2h-1v2h-1v-1h-1v-1h1',
+      /* */ 'v-1h1zM24 17h1v1h-1zM4 18h7v7h-7zM15 18h1v1h-1zM17 18h1v1h-1zM23 ',
+      /* */ '18h1v1h1v1h-2v1h-1v-2h1zM5 19v5h5v-5zM12 19h2v2h-1v2h-1zM6 20h3v3',
+      /* */ 'h-3zM15 20h1v1h1v-1h1v1h1v1h1v1h-1v1h-2v1h-1v-1h-1v1h-3v-1h1v-1h3',
+      /* */ 'v-1h-1zM21 21h1v1h-1zM17 22v1h1v-1zM21 23h1v1h-1zM19 24h1v1h-1zM2',
+      /* */ '2 24h2v1h-2z"/>',
       '</svg>',
     ].join(''))
   })
 
   it('should generate a SVG QR code', async () => {
-    const svg = await generate('https://www.juit.com/', 'svg', { ecLevel: 'L', url: true, scale: 3 })
+    const svg = await generate('https://www.juit.com/', 'svg', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
 
     await fs.writeFile('./test.svg', svg)
 
@@ -53,7 +52,7 @@ describe('QR Code as a SVG', () => {
   })
 
   it('should generate a SVG QR code as a data URL', async () => {
-    const svg = await generate('https://www.juit.com/', 'svgData', { ecLevel: 'L', url: true, scale: 3 })
+    const svg = await generate('https://www.juit.com/', 'svgData', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
 
     expect(svg).toEqual([
       'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwM',

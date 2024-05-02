@@ -5,38 +5,38 @@ import { generate, generatePdf, generateQrCode } from '../src/index'
 describe('QR Code as a PDF', () => {
   it('should generate a PDF QR code for a simple message', async () => {
     const code = generateQrCode('foo')
-    const pdf = await generatePdf(code, { margin: 0 })
+    const pdf = await generatePdf(code)
 
     expect(new TextDecoder().decode(pdf.slice(0, 277))).toEqual([
       '%PDF-1.0\n', // newline after header
       '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj',
       '2 0 obj << /Type /Pages /Count 1 /Kids [ 3 0 R ] >> endobj',
-      '3 0 obj << /Type /Page /Parent 2 0 R /Resources <<>> /Contents 4 0 R /MediaBox [ 0 0 189 189 ] >> endobj',
-      '4 0 obj << /Length 572 /Filter /FlateDecode >> stream',
+      '3 0 obj << /Type /Page /Parent 2 0 R /Resources <<>> /Contents 4 0 R /MediaBox [ 0 0 261 261 ] >> endobj',
+      '4 0 obj << /Length 587 /Filter /FlateDecode >> stream',
       '', // rest is the deflated content after a newline...
     ].join('\n'))
 
-    expect(Buffer.from(pdf.slice(277 -1, 277 + 572 + 1)).toString('hex')).toEqual([ // include newlines
-      '0a789c5d95498e24210c45f7798a3802660a384f4bad5a54dc7fdbe0f74da45a25f1b23', // newline before deflated data
-      '09e0d31afb4fea6af7f9e4fbab25dcf756ffc2e585d48e0e76386d80af2cdb4990f6d6e',
-      '1a5c1a158d6c68acc56dad256c6ed565f2b2b6feef01b7f7f39992263958a18cc579d0b',
-      '51b6c6c0b55bbf54b6af6b228e860566841df9f2f7d7fbc4cda173df73bc0a9f6d24bd6',
-      '5f26ed8b938a0a37210993040472679dde2756b7340e4c5906a345c1ffe559550a16cc0',
-      '89392aaaf4d8d691433a74375ce47e1b91a1a8d0e65b0f4255ec64d09d3c2f744d709f9',
-      'b468763f276cff7a8ecee67783f1d2e4a5c94bd549a6cfb3f4e9f316937b3e289455d89',
-      'bf5c0484b4828008f57ab6f25f0f3712bcfa511528f6eb06a9610e70844cdd9fb9cf0e9',
-      '7942431def617de7a7fb4993eb4bf47715fd3ea6d7f2f7101343520c89182607a72ae65',
-      'd5176c3931beaf896549754dfcb923497c4940eafd8883972731d7b9d796f0e8f7612ac',
-      '4218848aee587cce3db8bd9ed24b2e32e25bb89968496fa403e9b83af755a8042234e21',
-      '13480fd2bd65b56333e333e333e73f8dcdc15b8bd028c448a29be19625df54ec83d3aea',
-      'd28ab4222d219d2e9597858e6ba1512da1926cfdca79869dab730918265fbb6adc797ef',
-      '5be56af352b139cd5fbe697bd796fb93d39f26be4d7c8af9281d0484ba89459289459d0',
-      '2b1a8fa9ae33d08b160f9b1e01c063a827d103b713bee540e1708909a94c88aa55e8748',
-      '99e147d04895a38ba19ddf848a06b31efc6bceb23a0b75fb330aeb89cf4336102e9dfcf',
-      '3f3c6489860a', // newline after deflated data
+    expect(Buffer.from(pdf.slice(277 -1, 277 + 587 + 1)).toString('hex')).toEqual([ // include newlines
+      '0a789c5d955dcedc300845dfbf55640931fe5f4fa5aa0fcdfe5f6b730fce4c3552cec80', // newline before deflated data
+      '66ce092cceb5ebfe9cf5fcf4fb9ac5ecf95d2e6dfcd34168bf0e727550c3a068b65b3bd',
+      'cc9b555c1e431e56e5b11e1e6b3d8859b7eb73adf5b9d7ef438fb8226419a4c2198bb69',
+      '95fdeac4345c82f07ebe373bfbeecbafb61e386c1bdbe123adcebebf0c3c27a70e76ee9',
+      'a5c7992fbd12f7cbc27a30abb687897b05337904a9c361a679418f6b2f2b7907e9dde1f',
+      'ffb8d73829d38503dcfa7e7938e4d55d8ca213d75993c4b77ee31d5b8262c7fb6b7baa8',
+      '803a7b2c16dcc238d3d0c05ebf8f52ef1da31ddfafaefb29eb9f9fa29d8e3e5a28d3137',
+      '565ee3c29433be81437b897c741f5c402452e202b1c289a30d4ee811eaf6efbec561257',
+      'ee4516c6858c3eed75592457d6737c8e02ee734ac7a2b3335e724a964544b5f2ad72dda',
+      '3708fc23d329639ea97553f3235656a68c077877687965bec4eed7e8ad8544a0b8db9c1',
+      '9e9ecc1425a6279d0c3219c4bd8c0c8861fbdff33539899a2b8666eb71d518ea49cc00a',
+      '724599811dd769935f570e87a60ea9220a1dac3846f3a35366a6cd438914b8a1a27ea94',
+      '5427c9a9c41468fbe3dd7193c77d94e016038b81450f0bcbb28833376fee02a7ca0a86c',
+      'a303eab91239a3b6d4d540912c46d4cdb893316871a0318898682a6bf44a60b4353d922',
+      'efa9b4a7b21e4a094c250a865a01ba1a017861033e79809725e0550978d182aacbd78f1',
+      'c5aa0cba1879a86c444f5bae4d0a3575d43cb77091cdf265fbe4a55be35e6a56a5cf8e6',
+      'f0a96196ed62d899f5a210dafdfdf30f9541a1c40a', // newline after deflated data
     ].join(''))
 
-    expect(new TextDecoder().decode(pdf.slice(277 + 572))).toEqual([
+    expect(new TextDecoder().decode(pdf.slice(277 + 587))).toEqual([
       '', // the deflated content ends and a newline is added
       'endstream',
       'endobj',
@@ -49,14 +49,14 @@ describe('QR Code as a PDF', () => {
       '0000000223 00000 n ',
       'trailer << /Root 1 0 R /Size 5 >>',
       'startxref',
-      '867',
+      '882',
       '%%EOF',
       '', // there's always a newline at the end of the file
     ].join('\n'))
   })
 
   it('should generate a PDF QR code', async () => {
-    const pdf = await generate('https://www.juit.com/', 'pdf', { ecLevel: 'L', url: true, scale: 3 })
+    const pdf = await generate('https://www.juit.com/', 'pdf', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
 
     await fs.writeFile('./test.pdf', pdf)
 
@@ -108,7 +108,7 @@ describe('QR Code as a PDF', () => {
   })
 
   it('should generate a PDF QR code as a data URL', async () => {
-    const pdf = await generate('https://www.juit.com/', 'pdfData', { ecLevel: 'L', url: true, scale: 3 })
+    const pdf = await generate('https://www.juit.com/', 'pdfData', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
 
     expect(pdf).toEqual([
       'data:application/pdf;base64,JVBERi0xLjAKCjEgMCBvYmogPDwgL1R5cGUgL0NhdGF',

@@ -5,5 +5,5 @@ export const QR_CODE_DEFAULTS = {
   ecLevel: 'M',
   url: false,
   scale: 1,
-  margin: 1,
+  margin: 4,
 } as const satisfies Required<QrCodeOptions>

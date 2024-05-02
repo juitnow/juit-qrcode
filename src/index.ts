@@ -43,9 +43,15 @@ export interface QrCodeGenerationOptions {
 
 /** Options to render a {@link QrCode} into an image */
 export interface QrCodeImageOptions {
-  /** The number of pixels used for each dot in the matrix (default: `1` for PNG/SVG and `9` for PDF) */
+  /**
+   * The number of pixels used for each dot in the matrix
+   * (default: `1` for PNG/SVG and `9` for PDF)
+   */
   scale?: number,
-  /** The size of the margin around the QR code in matrix dots (default: `1`) */
+  /**
+   * The size of the margin around the QR code in matrix modules
+   * (default: `4` as per the QR code specification - the _quiet area_)
+   */
   margin?: number,
 }
 
@@ -114,7 +120,14 @@ export function generate(message: string | Uint8Array, format: 'pngData', option
 export function generate(message: string | Uint8Array, format: 'pdfData', options?: QrCodeOptions): Promise<string>
 /** Generate a QR code as a SVG data URL from a string or binary message */
 export function generate(message: string | Uint8Array, format: 'svgData', options?: QrCodeOptions): Promise<string>
-// Method overload implementation
+/** Generate a QR code as an image */
+export async function generate<Format extends 'png' | 'pdf' | 'svg' | 'pngData' | 'pdfData' | 'svgData'>(
+  message: string | Uint8Array,
+  format: Format,
+  options?: QrCodeOptions,
+): Promise<Format extends 'png' ? Uint8Array : Format extends 'pdf' ? Uint8Array : string>
+
+// Overloaded function implementations
 export async function generate(
     message: string | Uint8Array,
     format: 'png' | 'pdf' | 'svg' | 'pngData' | 'pdfData' | 'svgData',
