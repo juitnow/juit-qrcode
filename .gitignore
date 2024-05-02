@@ -1,0 +1,10 @@
+*.tgz
+.coverage-data/
+.vscode/
+coverage/
+dist/
+node_modules/
+test-pdfkit.pdf
+test.pdf
+test.png
+test.svg

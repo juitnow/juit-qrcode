@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [ "@plugjs/expect5/globals", "node" ],
+    "rootDir": "..",
+  },
+  "include": [ "." ],
+}
