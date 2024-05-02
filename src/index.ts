@@ -49,9 +49,10 @@ export interface QRCodeImageOptions {
   margin?: number,
 }
 
+/** QR code options */
 export interface QRCodeOptions extends QRCodeGenerationOptions, QRCodeImageOptions {}
 
-
+/** Generate a {@link QRCode} from a string or binary message */
 export function generate(message: string | Uint8Array, options?: QRCodeGenerationOptions): QRCode {
   const { ecLevel, url = false } = { ...QR_CODE_DEFAULTS, ...options }
 
@@ -67,14 +68,19 @@ export function generate(message: string | Uint8Array, options?: QRCodeGeneratio
   }
 }
 
-
+/** Generate a QR code in PNG format from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'png', options?: QRCodeOptions): Promise<Uint8Array>
+/** Generate a QR code in PDF format from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'pdf', options?: QRCodeOptions): Promise<Uint8Array>
+/** Generate a QR code in SVG format from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'svg', options?: QRCodeOptions): Promise<string>
+/** Generate a QR code as a PNG data URI from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'pngData', options?: QRCodeOptions): Promise<string>
+/** Generate a QR code as a PDF data URI from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'pdfData', options?: QRCodeOptions): Promise<string>
+/** Generate a QR code as a SVG data URI from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'svgData', options?: QRCodeOptions): Promise<string>
-
+// Method overload implementation
 export async function qr(
     message: string | Uint8Array,
     format: 'png' | 'pdf' | 'svg' | 'pngData' | 'pdfData' | 'svgData',
