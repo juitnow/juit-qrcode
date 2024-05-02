@@ -1,6 +1,9 @@
-import fs from 'node:fs/promises'
+import { createWriteStream } from 'node:fs'
+import { writeFile } from 'node:fs/promises'
 
-import { generate, generateQrCode, generateSvg } from '../src/index'
+import PDFDocument from 'pdfkit'
+
+import { generate, generateQrCode, generateSvg, generateSvgPath } from '../src/index'
 
 describe('QR Code as a SVG', () => {
   it('should generate a SVG QR code for a simple message', async () => {
@@ -30,7 +33,7 @@ describe('QR Code as a SVG', () => {
   it('should generate a SVG QR code', async () => {
     const svg = await generate('https://www.juit.com/', 'svg', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
 
-    await fs.writeFile('./test.svg', svg)
+    await writeFile('./test.svg', svg)
 
     expect(svg).toEqual([
       '<svg xmlns="http://www.w3.org/2000/svg" width="69" height="69" viewBox="0 0 23 23">',
@@ -72,5 +75,57 @@ describe('QR Code as a SVG', () => {
       'aC0xek05IDIwaDF2MmgtMXpNMTIgMjBoMXYxaC0xek0xOSAyMGgxdjFoLTF6TTEzIDIxaDF',
       '2MWgtMXpNMTcgMjFoMnYxaC0yeiIvPjwvc3ZnPg==',
     ].join(''))
+  })
+
+  it('should generate a SVG QR code and use it with PDFKit', () => {
+    const code = generateQrCode('https://www.juit.com/', { ecLevel: 'L', url: true })
+    const path = generateSvgPath(code)
+
+    // first check our path...
+    expect(path).toEqual([
+      'M0 0,h,7,v,7,h,-7,z,M11 0,h,2,v,3,h,-1,v,-2,h,-1,z,M14 0,h,7,v,7,h,-7,z',
+      ',M1 1,v,5,h,5,v,-5,z,M10 1,h,1,v,3,h,-1,z,M15 1,v,5,h,5,v,-5,z,M2 2,h,3',
+      ',v,3,h,-3,z,M16 2,h,3,v,3,h,-3,z,M8 3,h,1,v,1,h,1,v,2,h,-1,v,-1,h,-1,z,',
+      'M11 4,h,2,v,4,h,-1,v,1,h,1,v,1,h,-2,v,-3,h,1,v,-1,h,-1,z,M8 6,h,1,v,1,h',
+      ',-1,z,M10 6,h,1,v,1,h,-1,z,M0 8,h,2,v,1,h,-1,v,1,h,-1,z,M5 8,h,3,v,1,h,',
+      '-2,v,1,h,-3,v,-1,h,2,z,M16 8,h,2,v,1,h,-2,z,M9 9,h,1,v,1,h,1,v,2,h,-2,z',
+      ',M15 9,h,1,v,1,h,1,v,1,h,-2,z,M6 10,h,2,v,2,h,-1,v,-1,h,-1,z,M13 10,h,1',
+      ',v,2,h,3,v,-1,h,3,v,1,h,1,v,3,h,-1,v,-1,h,-1,v,4,h,-1,v,1,h,-1,v,-2,h,1',
+      ',v,-1,h,-3,v,-1,h,1,v,-1,h,1,v,-1,h,-2,v,1,h,-1,v,4,h,-1,v,-1,h,-1,v,1,',
+      'h,-1,v,1,h,-2,v,-1,h,1,v,-2,h,3,v,-4,h,-1,v,-1,h,1,z,M20 10,h,1,v,1,h,-',
+      '1,z,M4 11,h,1,v,1,h,-1,z,M0 12,h,4,v,1,h,-4,z,M5 12,h,2,v,1,h,-2,z,M8 1',
+      '2,h,1,v,1,h,1,v,2,h,-1,v,1,h,-1,z,M11 12,h,1,v,1,h,-1,z,M18 12,v,1,h,1,',
+      'v,-1,z,M0 14,h,7,v,7,h,-7,z,M11 14,h,1,v,1,h,-1,z,M1 15,v,5,h,5,v,-5,z,',
+      'M2 16,h,3,v,3,h,-3,z,M20 16,h,1,v,1,h,-1,z,M15 17,h,1,v,1,h,-1,z,M14 18',
+      ',h,1,v,1,h,1,v,1,h,-1,v,1,h,-1,z,M19 18,h,2,v,2,h,-1,v,-1,h,-1,z,M8 19,',
+      'h,1,v,2,h,-1,z,M11 19,h,1,v,1,h,-1,z,M18 19,h,1,v,1,h,-1,z,M12 20,h,1,v',
+      ',1,h,-1,z,M16 20,h,2,v,1,h,-2,z',
+    ].join(''))
+
+    // measurements...
+    const dpcm = 72 / 2.54 // PDFKit uses 72dpi (inches) we want metric!
+    const size = 10 * dpcm // 10 cm (size of our QR code) in dots
+    const scale = size / code.size // scale factor for our QR code to be 10 cm
+    const x = ((21 - 10) / 2) * dpcm // center horizontally
+    const y = ((29.7 - 10) / 2) * dpcm // center vertically
+
+    // create a PDF document and stream it to "test-pdfkit.pdf"
+    const document = new PDFDocument({ size: 'A4' })
+    const stream = createWriteStream('test-pdfkit.pdf')
+    document.pipe(stream)
+
+    // smack the 10cm QR code right in the middle of the page
+    document
+        .translate(x, y) // move to x = 5.5cm, y = 9.85cm
+        .scale(scale) // scale our QR code to 10cm width and height
+        .path(path) // draw our QR code smack in the middle of the page
+        .fill('black') // fill our QR code in black
+        .end() // done with our simple doc
+
+    // wait for PDFKit to actch up...
+    return new Promise((resolve, reject) => {
+      stream.on('error', reject)
+      stream.on('finish', resolve)
+    })
   })
 })
