@@ -1,4 +1,22 @@
 {
+  "name": "@juit/qr-image",
+  "version": "1.0.0",
+  "description": "A modern QR code generator for JavaScript",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
   "scripts": {
     "build": "plug",
     "coverage": "plug coverage",
@@ -7,12 +25,34 @@
     "test": "plug test",
     "transpile": "plug transpile"
   },
+  "author": "Juit Developers <developers@juit.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@plugjs/build": "^0.5.36"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/juitnow/juit-qr-image.git"
+  },
+  "keywords": [
+    "qrcode",
+    "qr code",
+    "qr",
+    "png",
+    "svg",
+    "pdf",
+    "image"
+  ],
+  "bugs": {
+    "url": "https://github.com/juitnow/juit-qr-image/issues"
+  },
+  "homepage": "https://github.com/juitnow/juit-qr-image#readme",
   "files": [
     "*.md",
     "dist/",
     "src/"
-  ],
-  "devDependencies": {
-    "@plugjs/build": "^0.5.36"
-  }
+  ]
 }
