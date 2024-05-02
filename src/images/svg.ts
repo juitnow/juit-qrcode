@@ -40,10 +40,10 @@ function convertPath(
  * (where _**N**_ is the size of the {@link QrCode.size size} of the matrix).
  *
  * This can be scaled and positioned into a final SVG using the `scale(...)` and
- * `translate(...)` (basic SVG transformations)[https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Transformations].
+ * `translate(...)` [basic SVG transformations](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Transformations).
  *
- * This is also particulary useful with (PDFKit)[https://pdfkit.org/]'s own
- * implementation of (SVG paths)[https://pdfkit.org/docs/vector.html#svg_paths].
+ * This is also particulary useful with [PDFKit](https://pdfkit.org/)'s own
+ * implementation of [SVG paths](https://pdfkit.org/docs/vector.html#svg_paths).
  *
  * We can use it together with `translate(...)` and `scale(...)` to draw our QR
  * code anywhere on the page, in any size. For example, to prepare a simple A4
