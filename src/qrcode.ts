@@ -1,6 +1,6 @@
 import { calculateEcc } from './utils/ecc'
 
-import type { QRCodeMessage } from './encode'
+import type { QrCodeMessage } from './encode'
 import type { ECLevel } from './index'
 
 /* ========================================================================== *
@@ -20,7 +20,7 @@ type Version = {
 }
 
 /** The internal structure of a QR code */
-export interface QRCodeData {
+export interface QrCodeData {
   /** The version of the QR code (1...40) */
   readonly version: number,
   /** The error correction level for the QR code */
@@ -115,7 +115,7 @@ const VERSIONS: Version[] = CODEWORDS.map((v: number[], index): Version => {
  * ========================================================================== */
 
 // Get the template for the specified message and error correction level
-function getTemplate(message: QRCodeMessage, ecLevel: ECLevel): Template {
+function getTemplate(message: QrCodeMessage, ecLevel: ECLevel): Template {
   let len: number = NaN
   let i = 1
 
@@ -157,7 +157,7 @@ function getTemplate(message: QRCodeMessage, ecLevel: ECLevel): Template {
 }
 
 // Fill in a template and prepare a QR code
-function fillTemplate(encoded: QRCodeMessage, template: Template): QRCodeData {
+function fillTemplate(encoded: QrCodeMessage, template: Template): QrCodeData {
   const blocks = new Array<number>(template.dataLen).fill(0)
 
   let message: boolean[]
@@ -209,9 +209,9 @@ function fillTemplate(encoded: QRCodeMessage, template: Template): QRCodeData {
 /**
  * Create the QR code structure for the given text or binary data.
  *
- * @param data The {@link QRCodeMessage} structure containing the message
+ * @param data The {@link QrCodeMessage} structure containing the message
  * @param ecLevel The error correction level for the QR code
  */
-export function generateQRCodeData(data: QRCodeMessage, ecLevel: ECLevel): QRCodeData {
+export function generateQrCodeData(data: QrCodeMessage, ecLevel: ECLevel): QrCodeData {
   return fillTemplate(data, getTemplate(data, ecLevel))
 }

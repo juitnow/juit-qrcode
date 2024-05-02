@@ -3,10 +3,10 @@ import { deflate } from '../utils/deflate'
 import { mergeArrays } from '../utils/merge'
 import { generatePaths } from './path'
 
-import type { QRCode, QRCodeImageOptions } from '..'
+import type { QrCode, QrCodeImageOptions } from '..'
 
-/** Generate a PDF document for the given {@link QRCode} */
-export async function generatePdf(code: QRCode, options?: QRCodeImageOptions): Promise<Uint8Array> {
+/** Generate a PDF document for the given {@link QrCode} */
+export async function generatePdf(code: QrCode, options?: QrCodeImageOptions): Promise<Uint8Array> {
   const { margin, scale } = { ...QR_CODE_DEFAULTS, ...{ scale: 9 }, ...options }
   const size = (code.size + 2 * margin) * scale
 

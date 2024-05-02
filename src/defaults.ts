@@ -1,4 +1,4 @@
-import type { QRCodeOptions } from './index'
+import type { QrCodeOptions } from './index'
 
 /** Shared defaults (exported here to avoid import loops) */
 export const QR_CODE_DEFAULTS = {
@@ -6,4 +6,4 @@ export const QR_CODE_DEFAULTS = {
   url: false,
   scale: 1,
   margin: 1,
-} as const satisfies Required<QRCodeOptions>
+} as const satisfies Required<QrCodeOptions>

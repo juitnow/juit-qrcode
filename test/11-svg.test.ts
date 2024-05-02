@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises'
 
-import { generate, generateSvg, qr } from '../src/index'
+import { generateQrCode, generateSvg, qr } from '../src/index'
 
 describe('QR Code as a SVG', () => {
   it('should generate a SVG QR code for a simple message', async () => {
-    const code = generate('foo')
+    const code = generateQrCode('foo')
     const svg = await generateSvg(code, { margin: 0 })
 
     expect(svg).toEqual([

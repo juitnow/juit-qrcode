@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises'
 
-import { generate, generatePng, qr } from '../src/index'
+import { generatePng, generateQrCode, qr } from '../src/index'
 
 describe('QR Code as a PNG', () => {
   it('should generate a PNG QR code for a simple message', async () => {
-    const code = generate('foo')
+    const code = generateQrCode('foo')
     const png = await generatePng(code, { margin: 0 })
 
     expect(Buffer.from(png).toString('hex'))

@@ -1,11 +1,11 @@
-import type { QRCode } from '../index'
+import type { QrCode } from '../index'
 
 export type PathItem = [ 'M', number, number ] | [ 'h', number ] | [ 'v', number ]
 export type Path = PathItem[]
 export type Paths = Path[]
 
 /** Generate a set of vector paths for a QR code */
-export function generatePaths(code: QRCode): Paths {
+export function generatePaths(code: QrCode): Paths {
   const { matrix, size } = code
 
   const filled: boolean[][] = []

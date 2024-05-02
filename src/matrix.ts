@@ -1,5 +1,5 @@
 import type { ECLevel } from './index'
-import type { QRCodeData } from './qrcode'
+import type { QrCodeData } from './qrcode'
 
 /* ========================================================================== *
  * INTERNALS                                                                  *
@@ -195,7 +195,7 @@ const fillData = ((): ((matrix: number[][], data: any, mask: number) => void) =>
     },
   ]
 
-  return function fillData(matrix: number[][], data: QRCodeData, mask: number): void {
+  return function fillData(matrix: number[][], data: QrCodeData, mask: number): void {
     const N = matrix.length
     let row: number
     let col: number
@@ -363,7 +363,7 @@ function calculatePenalty(matrix: number[][]): number {
  * ========================================================================== */
 
 /** Generate a matrix from a QR code data structure */
-export function generateQRCodeMatrix(code: QRCodeData): boolean[][] {
+export function generateQrCodeMatrix(code: QrCodeData): boolean[][] {
   const matrix = init(code.version)
   fillFinders(matrix)
   fillAlignAndTiming(matrix)

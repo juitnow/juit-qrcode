@@ -1,10 +1,10 @@
 import { QR_CODE_DEFAULTS } from './defaults'
-import { encodeQRCodeData } from './encode'
+import { encodeQrCodeMessage } from './encode'
 import { generatePdf } from './images/pdf'
 import { generatePng } from './images/png'
 import { generateSvg } from './images/svg'
-import { generateQRCodeMatrix } from './matrix'
-import { generateQRCodeData } from './qrcode'
+import { generateQrCodeMatrix } from './matrix'
+import { generateQrCodeData } from './qrcode'
 import { generateDataUrl } from './utils/dataurl'
 
 export { generatePdf } from './images/pdf'
@@ -22,7 +22,7 @@ export { generateSvg } from './images/svg'
 export type ECLevel = 'L' | 'M' | 'Q' | 'H'
 
 /** The structure of a _generated_ QR code */
-export interface QRCode {
+export interface QrCode {
   /** The version of the QR code (1...40) */
   readonly version: number,
   /** The error correction level for the QR code */
@@ -33,16 +33,16 @@ export interface QRCode {
   readonly matrix: readonly boolean[][]
 }
 
-/** Options for the generation of a {@link QRCode} */
-export interface QRCodeGenerationOptions {
+/** Options for the generation of a {@link QrCode} */
+export interface QrCodeGenerationOptions {
   /** The error correction level for the QR code (default: `M`) */
   ecLevel?: ECLevel,
   /** Whether to optimize URLs in QR codes (default: `false`) */
   url?: boolean,
 }
 
-/** Options to render a {@link QRCode} into an image */
-export interface QRCodeImageOptions {
+/** Options to render a {@link QrCode} into an image */
+export interface QrCodeImageOptions {
   /** The number of pixels used for each dot in the matrix (default: `1` for PNG/SVG and `9` for PDF) */
   scale?: number,
   /** The size of the margin around the QR code in matrix dots (default: `1`) */
@@ -50,15 +50,15 @@ export interface QRCodeImageOptions {
 }
 
 /** QR code options */
-export interface QRCodeOptions extends QRCodeGenerationOptions, QRCodeImageOptions {}
+export interface QrCodeOptions extends QrCodeGenerationOptions, QrCodeImageOptions {}
 
-/** Generate a {@link QRCode} from a string or binary message */
-export function generate(message: string | Uint8Array, options?: QRCodeGenerationOptions): QRCode {
+/** Generate a {@link QrCode} from a string or binary message */
+export function generateQrCode(message: string | Uint8Array, options?: QrCodeGenerationOptions): QrCode {
   const { ecLevel, url = false } = { ...QR_CODE_DEFAULTS, ...options }
 
-  const encoded = encodeQRCodeData(message, url)
-  const qrcode = generateQRCodeData(encoded, ecLevel)
-  const matrix = generateQRCodeMatrix(qrcode)
+  const encoded = encodeQrCodeMessage(message, url)
+  const qrcode = generateQrCodeData(encoded, ecLevel)
+  const matrix = generateQrCodeMatrix(qrcode)
 
   return {
     version: qrcode.version,
@@ -69,24 +69,24 @@ export function generate(message: string | Uint8Array, options?: QRCodeGeneratio
 }
 
 /** Generate a QR code in PNG format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'png', options?: QRCodeOptions): Promise<Uint8Array>
+export function qr(message: string | Uint8Array, format: 'png', options?: QrCodeOptions): Promise<Uint8Array>
 /** Generate a QR code in PDF format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pdf', options?: QRCodeOptions): Promise<Uint8Array>
+export function qr(message: string | Uint8Array, format: 'pdf', options?: QrCodeOptions): Promise<Uint8Array>
 /** Generate a QR code in SVG format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'svg', options?: QRCodeOptions): Promise<string>
+export function qr(message: string | Uint8Array, format: 'svg', options?: QrCodeOptions): Promise<string>
 /** Generate a QR code as a PNG data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pngData', options?: QRCodeOptions): Promise<string>
+export function qr(message: string | Uint8Array, format: 'pngData', options?: QrCodeOptions): Promise<string>
 /** Generate a QR code as a PDF data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pdfData', options?: QRCodeOptions): Promise<string>
+export function qr(message: string | Uint8Array, format: 'pdfData', options?: QrCodeOptions): Promise<string>
 /** Generate a QR code as a SVG data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'svgData', options?: QRCodeOptions): Promise<string>
+export function qr(message: string | Uint8Array, format: 'svgData', options?: QrCodeOptions): Promise<string>
 // Method overload implementation
 export async function qr(
     message: string | Uint8Array,
     format: 'png' | 'pdf' | 'svg' | 'pngData' | 'pdfData' | 'svgData',
-    options?: QRCodeOptions,
+    options?: QrCodeOptions,
 ): Promise<Uint8Array | string> {
-  const code = generate(message, options)
+  const code = generateQrCode(message, options)
 
   switch (format) {
     // plain images

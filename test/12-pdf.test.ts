@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises'
 
-import { generate, generatePdf, qr } from '../src/index'
+import { generatePdf, generateQrCode, qr } from '../src/index'
 
 describe('QR Code as a PDF', () => {
   it('should generate a PDF QR code for a simple message', async () => {
-    const code = generate('foo')
+    const code = generateQrCode('foo')
     const pdf = await generatePdf(code, { margin: 0 })
 
     expect(new TextDecoder().decode(pdf.slice(0, 277))).toEqual([

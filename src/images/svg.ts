@@ -1,10 +1,10 @@
 import { QR_CODE_DEFAULTS } from '../defaults'
 import { generatePaths } from './path'
 
-import type { QRCode, QRCodeImageOptions } from '..'
+import type { QrCode, QrCodeImageOptions } from '..'
 
-/** Generate a SVG image for the given {@link QRCode} */
-export function generateSvg(code: QRCode, options?: QRCodeImageOptions): string {
+/** Generate a SVG image for the given {@link QrCode} */
+export function generateSvg(code: QrCode, options?: QrCodeImageOptions): string {
   const { scale, margin } = { ...QR_CODE_DEFAULTS, ...options }
   const size = code.size + 2 * margin
   const scaled = size * scale

@@ -3,7 +3,7 @@
  * ========================================================================== */
 
 /** Internal interface for encoding data */
-export interface QRCodeMessage {
+export interface QrCodeMessage {
   /** Data for QR code version 27 or greater */
   data27: boolean[],
   /** Data for QR code version 10 or greater (shorter) */
@@ -38,7 +38,7 @@ function pushBits(arr: boolean[], n: number, value: number): boolean[] {
 }
 
 // Encode binary data
-function binaryEncode(data: Uint8Array): QRCodeMessage {
+function binaryEncode(data: Uint8Array): QrCodeMessage {
   const len = data.length
   const bits: boolean[] = []
 
@@ -48,7 +48,7 @@ function binaryEncode(data: Uint8Array): QRCodeMessage {
 
   const d = pushBits([ false, true, false, false ], 16, len)
 
-  const res: QRCodeMessage = {
+  const res: QrCodeMessage = {
     data27: d.concat(bits),
   }
   res.data10 = res.data27
@@ -62,7 +62,7 @@ function binaryEncode(data: Uint8Array): QRCodeMessage {
 }
 
 // Encode alphanumeric data
-function alphanumEncode(str: string): QRCodeMessage {
+function alphanumEncode(str: string): QrCodeMessage {
   const len = str.length
   const bits: boolean[] = []
 
@@ -78,7 +78,7 @@ function alphanumEncode(str: string): QRCodeMessage {
 
   const d = pushBits([ false, false, true, false ], 13, len)
 
-  const res: QRCodeMessage = {
+  const res: QrCodeMessage = {
     data27: d.concat(bits),
   }
 
@@ -96,7 +96,7 @@ function alphanumEncode(str: string): QRCodeMessage {
 }
 
 // Encode numeric data
-function numericEncode(str: string): QRCodeMessage {
+function numericEncode(str: string): QrCodeMessage {
   const len = str.length
   const bits: boolean[] = []
 
@@ -108,7 +108,7 @@ function numericEncode(str: string): QRCodeMessage {
 
   const d = pushBits([ false, false, false, true ], 14, len)
 
-  const res: QRCodeMessage = {
+  const res: QrCodeMessage = {
     data27: d.concat(bits),
   }
 
@@ -126,13 +126,13 @@ function numericEncode(str: string): QRCodeMessage {
 }
 
 // Encode URLs (specific string format)
-function urlEncode(str: string): QRCodeMessage {
+function urlEncode(str: string): QrCodeMessage {
   const slash = str.indexOf('/', 8) + 1 || str.length
-  const res = encodeQRCodeData(str.slice(0, slash).toUpperCase(), false)
+  const res = encodeQrCodeMessage(str.slice(0, slash).toUpperCase(), false)
 
   if (slash >= str.length) return res
 
-  const path = encodeQRCodeData(str.slice(slash), false)
+  const path = encodeQrCodeMessage(str.slice(slash), false)
 
   res.data27 = res.data27.concat(path.data27)
 
@@ -152,7 +152,7 @@ function urlEncode(str: string): QRCodeMessage {
  * ========================================================================== */
 
 /** Generate a message for the specified text or binary data */
-export function encodeQRCodeData(message: string | Uint8Array, url: boolean): QRCodeMessage {
+export function encodeQrCodeMessage(message: string | Uint8Array, url: boolean): QrCodeMessage {
   let data: Uint8Array
 
   if (typeof message === 'string') {

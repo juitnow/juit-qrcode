@@ -1,4 +1,4 @@
-import { generate } from '../src/index'
+import { generateQrCode } from '../src/index'
 
 describe('QR Codes', () => {
   function stringify(matrix: readonly boolean[][]): string[] {
@@ -14,7 +14,7 @@ describe('QR Codes', () => {
   }
 
   it('should generate the QR code for an empty message', () => {
-    const { matrix, ...code } = generate('', { ecLevel: 'Q' })
+    const { matrix, ...code } = generateQrCode('', { ecLevel: 'Q' })
 
     expect(code).toEqual({
       version: 1,
@@ -48,7 +48,7 @@ describe('QR Codes', () => {
   })
 
   it('should generate the QR code for a short message (data1)', () => {
-    const { matrix, ...code } = generate('foo')
+    const { matrix, ...code } = generateQrCode('foo')
 
     expect(code).toEqual({
       version: 1,
@@ -82,7 +82,7 @@ describe('QR Codes', () => {
   })
 
   it('should generate the QR code for a medium message (data10)', () => {
-    const { matrix, ...code } = generate(new Array(512).fill('A').join('')) // "A" * 512
+    const { matrix, ...code } = generateQrCode(new Array(512).fill('A').join('')) // "A" * 512
 
     expect(code).toEqual({
       version: 14,
@@ -168,7 +168,7 @@ describe('QR Codes', () => {
   })
 
   it('should generate the QR code for a long message (data27)', () => {
-    const { matrix, ...code } = generate(new Array(2048).fill('A').join('')) // "A" * 2048
+    const { matrix, ...code } = generateQrCode(new Array(2048).fill('A').join('')) // "A" * 2048
 
     expect(code).toEqual({
       version: 31,
@@ -322,7 +322,7 @@ describe('QR Codes', () => {
   })
 
   it('should not generate the QR code structure for too-long message', () => {
-    expect(() => generate(new Array(4096).fill('A').join(''))) // "A" * 4096)
+    expect(() => generateQrCode(new Array(4096).fill('A').join(''))) // "A" * 4096)
         .toThrowError('Too much data to encode in QR code')
   })
 })

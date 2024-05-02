@@ -2,7 +2,7 @@ import { QR_CODE_DEFAULTS } from '../defaults'
 import { crc32 } from '../utils/crc32'
 import { deflate } from '../utils/deflate'
 
-import type { QRCode, QRCodeImageOptions } from '../index'
+import type { QrCode, QrCodeImageOptions } from '../index'
 
 /* ========================================================================== *
  * TYPES                                                                      *
@@ -97,8 +97,8 @@ function bitmap(matrix: readonly boolean[][], scale: number, margin: number): Bi
  * EXPORTED                                                                   *
  * ========================================================================== */
 
-/** Generate a PNG image for the given {@link QRCode} */
-export async function generatePng(code: QRCode, options?: QRCodeImageOptions): Promise<Uint8Array> {
+/** Generate a PNG image for the given {@link QrCode} */
+export async function generatePng(code: QrCode, options?: QrCodeImageOptions): Promise<Uint8Array> {
   const { scale, margin } = { ...QR_CODE_DEFAULTS, ...options }
   const result = bitmap(code.matrix, scale, margin)
   const image = await png(result)
