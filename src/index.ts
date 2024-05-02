@@ -5,7 +5,7 @@ import { generatePng } from './images/png'
 import { generateSvg } from './images/svg'
 import { generateQRCodeMatrix } from './matrix'
 import { generateQRCodeData } from './qrcode'
-import { generateDataUri } from './utils/data'
+import { generateDataUrl } from './utils/dataurl'
 
 export { generatePdf } from './images/pdf'
 export { generatePng } from './images/png'
@@ -74,11 +74,11 @@ export function qr(message: string | Uint8Array, format: 'png', options?: QRCode
 export function qr(message: string | Uint8Array, format: 'pdf', options?: QRCodeOptions): Promise<Uint8Array>
 /** Generate a QR code in SVG format from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'svg', options?: QRCodeOptions): Promise<string>
-/** Generate a QR code as a PNG data URI from a string or binary message */
+/** Generate a QR code as a PNG data URL from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'pngData', options?: QRCodeOptions): Promise<string>
-/** Generate a QR code as a PDF data URI from a string or binary message */
+/** Generate a QR code as a PDF data URL from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'pdfData', options?: QRCodeOptions): Promise<string>
-/** Generate a QR code as a SVG data URI from a string or binary message */
+/** Generate a QR code as a SVG data URL from a string or binary message */
 export function qr(message: string | Uint8Array, format: 'svgData', options?: QRCodeOptions): Promise<string>
 // Method overload implementation
 export async function qr(
@@ -93,10 +93,10 @@ export async function qr(
     case 'png': return await generatePng(code, options)
     case 'pdf': return await generatePdf(code, options)
     case 'svg': return generateSvg(code, options)
-    // images as data URIs
-    case 'pngData': return generateDataUri(await generatePng(code, options), 'image/png')
-    case 'pdfData': return generateDataUri(await generatePdf(code, options), 'application/pdf')
-    case 'svgData': return generateDataUri(generateSvg(code, options), 'image/svg+xml')
+    // images as data URLs
+    case 'pngData': return generateDataUrl(await generatePng(code, options), 'image/png')
+    case 'pdfData': return generateDataUrl(await generatePdf(code, options), 'application/pdf')
+    case 'svgData': return generateDataUrl(generateSvg(code, options), 'image/svg+xml')
     // coverage ignore next
     default: throw new Error(`Unsupported format "${format}"`)
   }

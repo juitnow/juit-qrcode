@@ -52,7 +52,7 @@ describe('QR Code as a SVG', () => {
     ].join(''))
   })
 
-  it('should generate a SVG QR code as a data URI', async () => {
+  it('should generate a SVG QR code as a data URL', async () => {
     const svg = await qr('https://www.juit.com/', 'svgData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(svg).toEqual([

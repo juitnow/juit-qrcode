@@ -35,7 +35,7 @@ describe('QR Code as a PNG', () => {
         ].join(''))
   })
 
-  it('should generate a PNG QR code as a data URI', async () => {
+  it('should generate a PNG QR code as a data URL', async () => {
     const png = await qr('https://www.juit.com/', 'pngData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(png).toEqual([

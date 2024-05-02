@@ -107,7 +107,7 @@ describe('QR Code as a PDF', () => {
     ].join('\n'))
   })
 
-  it('should generate a PDF QR code as a data URI', async () => {
+  it('should generate a PDF QR code as a data URL', async () => {
     const pdf = await qr('https://www.juit.com/', 'pdfData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(pdf).toEqual([
