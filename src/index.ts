@@ -68,35 +68,67 @@ export function generateQrCode(message: string | Uint8Array, options?: QrCodeGen
   }
 }
 
+/* ===== SINGLE FORMAT (MORE "BUNDLE FRIENDLY" FOR TREE SHAKING) ============ */
+
 /** Generate a QR code in PNG format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'png', options?: QrCodeOptions): Promise<Uint8Array>
+export async function generatePngQrCode(message: string | Uint8Array, options?: QrCodeOptions): Promise<Uint8Array> {
+  return await generatePng(generateQrCode(message, options), options)
+}
+
 /** Generate a QR code in PDF format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pdf', options?: QrCodeOptions): Promise<Uint8Array>
+export async function generatePdfQrCode(message: string | Uint8Array, options?: QrCodeOptions): Promise<Uint8Array> {
+  return await generatePdf(generateQrCode(message, options), options)
+}
+
 /** Generate a QR code in SVG format from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'svg', options?: QrCodeOptions): Promise<string>
+export function generateSvgQrCode(message: string | Uint8Array, options?: QrCodeOptions): string {
+  return generateSvg(generateQrCode(message, options), options)
+}
+
 /** Generate a QR code as a PNG data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pngData', options?: QrCodeOptions): Promise<string>
+export async function generatePngDataQrCode(message: string | Uint8Array, options?: QrCodeOptions): Promise<string> {
+  return generateDataUrl(await generatePng(generateQrCode(message, options), options), 'image/png')
+}
+
 /** Generate a QR code as a PDF data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'pdfData', options?: QrCodeOptions): Promise<string>
+export async function generatePdfDataQrCode(message: string | Uint8Array, options?: QrCodeOptions): Promise<string> {
+  return generateDataUrl(await generatePdf(generateQrCode(message, options), options), 'application/pdf')
+}
+
 /** Generate a QR code as a SVG data URL from a string or binary message */
-export function qr(message: string | Uint8Array, format: 'svgData', options?: QrCodeOptions): Promise<string>
+export function generateSvgDataQrCode(message: string | Uint8Array, options?: QrCodeOptions): string {
+  return generateDataUrl(generateSvg(generateQrCode(message, options), options), 'image/svg+xml')
+}
+
+/* ===== DEFINITELY NOT "BUNDLE FRIENDLY" =================================== */
+
+/** Generate a QR code in PNG format from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'png', options?: QrCodeOptions): Promise<Uint8Array>
+/** Generate a QR code in PDF format from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'pdf', options?: QrCodeOptions): Promise<Uint8Array>
+/** Generate a QR code in SVG format from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'svg', options?: QrCodeOptions): Promise<string>
+/** Generate a QR code as a PNG data URL from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'pngData', options?: QrCodeOptions): Promise<string>
+/** Generate a QR code as a PDF data URL from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'pdfData', options?: QrCodeOptions): Promise<string>
+/** Generate a QR code as a SVG data URL from a string or binary message */
+export function generate(message: string | Uint8Array, format: 'svgData', options?: QrCodeOptions): Promise<string>
 // Method overload implementation
-export async function qr(
+export async function generate(
     message: string | Uint8Array,
     format: 'png' | 'pdf' | 'svg' | 'pngData' | 'pdfData' | 'svgData',
     options?: QrCodeOptions,
 ): Promise<Uint8Array | string> {
-  const code = generateQrCode(message, options)
-
   switch (format) {
     // plain images
-    case 'png': return await generatePng(code, options)
-    case 'pdf': return await generatePdf(code, options)
-    case 'svg': return generateSvg(code, options)
+    case 'png': return await generatePngQrCode(message, options)
+    case 'pdf': return await generatePdfQrCode(message, options)
+    case 'svg': return generateSvgQrCode(message, options)
     // images as data URLs
-    case 'pngData': return generateDataUrl(await generatePng(code, options), 'image/png')
-    case 'pdfData': return generateDataUrl(await generatePdf(code, options), 'application/pdf')
-    case 'svgData': return generateDataUrl(generateSvg(code, options), 'image/svg+xml')
+    case 'pngData': return await generatePngDataQrCode(message, options)
+    case 'pdfData': return await generatePdfDataQrCode(message, options)
+    case 'svgData': return generateSvgDataQrCode(message, options)
     // coverage ignore next
     default: throw new Error(`Unsupported format "${format}"`)
   }

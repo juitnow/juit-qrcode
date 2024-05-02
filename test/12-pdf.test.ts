@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 
-import { generatePdf, generateQrCode, qr } from '../src/index'
+import { generate, generatePdf, generateQrCode } from '../src/index'
 
 describe('QR Code as a PDF', () => {
   it('should generate a PDF QR code for a simple message', async () => {
@@ -56,7 +56,7 @@ describe('QR Code as a PDF', () => {
   })
 
   it('should generate a PDF QR code', async () => {
-    const pdf = await qr('https://www.juit.com/', 'pdf', { ecLevel: 'L', url: true, scale: 3 })
+    const pdf = await generate('https://www.juit.com/', 'pdf', { ecLevel: 'L', url: true, scale: 3 })
 
     await fs.writeFile('./test.pdf', pdf)
 
@@ -108,7 +108,7 @@ describe('QR Code as a PDF', () => {
   })
 
   it('should generate a PDF QR code as a data URL', async () => {
-    const pdf = await qr('https://www.juit.com/', 'pdfData', { ecLevel: 'L', url: true, scale: 3 })
+    const pdf = await generate('https://www.juit.com/', 'pdfData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(pdf).toEqual([
       'data:application/pdf;base64,JVBERi0xLjAKCjEgMCBvYmogPDwgL1R5cGUgL0NhdGF',

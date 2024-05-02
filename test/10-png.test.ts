@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 
-import { generatePng, generateQrCode, qr } from '../src/index'
+import { generate, generatePng, generateQrCode } from '../src/index'
 
 describe('QR Code as a PNG', () => {
   it('should generate a PNG QR code for a simple message', async () => {
@@ -18,7 +18,7 @@ describe('QR Code as a PNG', () => {
   })
 
   it('should generate a PNG QR code', async () => {
-    const png = await qr('https://www.juit.com/', 'png', { ecLevel: 'L', url: true, scale: 3 })
+    const png = await generate('https://www.juit.com/', 'png', { ecLevel: 'L', url: true, scale: 3 })
 
     await fs.writeFile('./test.png', png)
 
@@ -36,7 +36,7 @@ describe('QR Code as a PNG', () => {
   })
 
   it('should generate a PNG QR code as a data URL', async () => {
-    const png = await qr('https://www.juit.com/', 'pngData', { ecLevel: 'L', url: true, scale: 3 })
+    const png = await generate('https://www.juit.com/', 'pngData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(png).toEqual([
       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAABFCAAAAAA55nT1AAAAv',

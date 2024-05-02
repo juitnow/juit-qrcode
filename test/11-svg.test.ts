@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 
-import { generateQrCode, generateSvg, qr } from '../src/index'
+import { generate, generateQrCode, generateSvg } from '../src/index'
 
 describe('QR Code as a SVG', () => {
   it('should generate a SVG QR code for a simple message', async () => {
@@ -29,7 +29,7 @@ describe('QR Code as a SVG', () => {
   })
 
   it('should generate a SVG QR code', async () => {
-    const svg = await qr('https://www.juit.com/', 'svg', { ecLevel: 'L', url: true, scale: 3 })
+    const svg = await generate('https://www.juit.com/', 'svg', { ecLevel: 'L', url: true, scale: 3 })
 
     await fs.writeFile('./test.svg', svg)
 
@@ -53,7 +53,7 @@ describe('QR Code as a SVG', () => {
   })
 
   it('should generate a SVG QR code as a data URL', async () => {
-    const svg = await qr('https://www.juit.com/', 'svgData', { ecLevel: 'L', url: true, scale: 3 })
+    const svg = await generate('https://www.juit.com/', 'svgData', { ecLevel: 'L', url: true, scale: 3 })
 
     expect(svg).toEqual([
       'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwM',
