@@ -1,4 +1,3 @@
-import { QR_CODE_DEFAULTS } from '../defaults'
 import { deflate } from '../utils/deflate'
 import { mergeArrays } from '../utils/merge'
 import { generatePaths } from './path'
@@ -7,7 +6,7 @@ import type { QrCode, QrCodeImageOptions } from '..'
 
 /** Generate a PDF document for the given {@link QrCode} */
 export async function generatePdf(code: QrCode, options?: QrCodeImageOptions): Promise<Uint8Array> {
-  const { margin, scale } = { ...QR_CODE_DEFAULTS, ...{ scale: 9 }, ...options }
+  const { margin = 4, scale = 9 } = { ...options }
   const size = (code.size + 2 * margin) * scale
 
   // Our text encoder used throughout

@@ -1,4 +1,3 @@
-import { QR_CODE_DEFAULTS } from './defaults'
 import { encodeQrCodeMessage } from './encode'
 import { generatePdf } from './images/pdf'
 import { generatePng } from './images/png'
@@ -60,7 +59,7 @@ export interface QrCodeOptions extends QrCodeGenerationOptions, QrCodeImageOptio
 
 /** Generate a {@link QrCode} from a string or binary message */
 export function generateQrCode(message: string | Uint8Array, options?: QrCodeGenerationOptions): QrCode {
-  const { ecLevel, url = false } = { ...QR_CODE_DEFAULTS, ...options }
+  const { ecLevel = 'M', url = false } = { ...options }
 
   const encoded = encodeQrCodeMessage(message, url)
   const qrcode = generateQrCodeData(encoded, ecLevel)
