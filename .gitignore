@@ -4,6 +4,7 @@
 coverage/
 dist/
 node_modules/
+test-pdfkit.png
 test.pdf
 test.png
 test.svg
