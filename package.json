@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "build": "plug",
+    "coverage": "plug coverage",
+    "dev": "plug coverage -w src -w test",
+    "lint": "plug lint",
+    "test": "plug test",
+    "transpile": "plug transpile"
+  },
+  "files": [
+    "*.md",
+    "dist/",
+    "src/"
+  ],
+  "devDependencies": {
+    "@plugjs/build": "^0.5.36"
+  }
+}
