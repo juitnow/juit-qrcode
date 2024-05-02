@@ -8,7 +8,7 @@ import { generateDataUrl } from './utils/dataurl'
 
 export { generatePdf } from './images/pdf'
 export { generatePng } from './images/png'
-export { generateSvg } from './images/svg'
+export { generateSvg, generateSvgPath } from './images/svg'
 
 /**
  * The error correction level for QR codes (`L`, `M`, `Q`, or `H`)
