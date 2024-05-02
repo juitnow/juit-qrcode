@@ -1,5 +1,5 @@
 {
-  "name": "@juit/qr-image",
+  "name": "@juit/qrcode",
   "version": "1.0.0",
   "description": "A modern QR code generator for JavaScript",
   "main": "./dist/index.cjs",
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/juitnow/juit-qr-image.git"
+    "url": "git+ssh://git@github.com/juitnow/juit-qrcode.git"
   },
   "keywords": [
     "qrcode",
@@ -49,9 +49,9 @@
     "image"
   ],
   "bugs": {
-    "url": "https://github.com/juitnow/juit-qr-image/issues"
+    "url": "https://github.com/juitnow/juit-qrcode/issues"
   },
-  "homepage": "https://github.com/juitnow/juit-qr-image#readme",
+  "homepage": "https://github.com/juitnow/juit-qrcode#readme",
   "files": [
     "*.md",
     "dist/",
