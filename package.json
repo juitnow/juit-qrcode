@@ -28,7 +28,9 @@
   "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@plugjs/build": "^0.5.36"
+    "@plugjs/build": "^0.5.36",
+    "@types/pdfkit": "^0.13.4",
+    "pdfkit": "^0.15.0"
   },
   "directories": {
     "test": "test"
