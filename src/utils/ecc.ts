@@ -1,5 +1,3 @@
-import { assert } from './assert'
-
 /* ========================================================================== *
  * CONSTANTS                                                                  *
  * ========================================================================== */
@@ -43,7 +41,8 @@ function exp(k: number): number {
 
 // Get the log for a number
 function log(k: number): number {
-  assert((k > 0) && (k < 256), `Bad log(${k})`)
+  // coverage ignore next
+  if ((k < 0) || (k > 255)) throw new Error(`Bad log(${k})`)
   return LOG_TABLE[k]!
 }
 

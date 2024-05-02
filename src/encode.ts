@@ -1,5 +1,3 @@
-import { assert } from './utils/assert'
-
 /* ========================================================================== *
  * TYPES                                                                      *
  * ========================================================================== */
@@ -161,12 +159,12 @@ export function encodeQRCodeData(message: string | Uint8Array, url: boolean): QR
     data = new TextEncoder().encode(message)
 
     if (/^[0-9]+$/.test(message)) {
-      assert(data.length <= 7089, `Too much numeric data (len=${data.length})`)
+      if (data.length > 7089) throw new Error(`Too much numeric data (len=${data.length})`)
       return numericEncode(message)
     }
 
     if (/^[0-9A-Z $%*+./:-]+$/.test(message)) {
-      assert(data.length <= 4296, `Too much alphanumeric data (len=${data.length})`)
+      if (data.length > 4296) throw new Error(`Too much alphanumeric data (len=${data.length})`)
       return alphanumEncode(message)
     }
 
@@ -177,6 +175,6 @@ export function encodeQRCodeData(message: string | Uint8Array, url: boolean): QR
     data = message
   }
 
-  assert(data.length <= 2953, `Too much binary data (len=${data.length})`)
+  if (data.length > 2953) throw new Error(`Too much binary data (len=${data.length})`)
   return binaryEncode(data)
 }
