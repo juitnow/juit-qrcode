@@ -11,8 +11,9 @@ describe('QR Code as a PNG', () => {
     const code = generateQrCode('foo')
     const png = await generatePng(code)
     const decoded = decode(png) // need to decode... deflate varies
+    const pngData = new Uint8Array(decoded.data)
 
-    expect(Buffer.from(decoded.data).toString('hex').replaceAll('f', ' '))
+    expect(Buffer.from(pngData).toString('hex').replaceAll('f', ' '))
         .toEqual([
           '                                                          ',
           '                                                          ',
@@ -49,10 +50,11 @@ describe('QR Code as a PNG', () => {
   it('should generate a PNG QR code', async () => {
     const png = await generate('https://www.juit.com/', 'png', { ecLevel: 'L', url: true, scale: 3, margin: 1 })
     const decoded = decode(png) // need to decode... deflate varies
+    const pngData = new Uint8Array(decoded.data)
 
     await writeFile('./test.png', png)
 
-    expect(Buffer.from(decoded.data).toString('hex').replaceAll('f', ' '))
+    expect(Buffer.from(pngData).toString('hex').replaceAll('f', ' '))
         .toEqual([
           '                                                                                                                                          ',
           '                                                                                                                                          ',
