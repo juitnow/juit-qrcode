@@ -1,9 +1,9 @@
 /** Compress a Uint8Array using "deflate" */
-export function deflate(data: Uint8Array): Promise<Uint8Array> {
+export function deflate(data: Uint8Array<ArrayBuffer>): Promise<Uint8Array> {
   return new Promise<Uint8Array>((resolve, reject) => {
-    const chunks: Uint8Array[] = []
+    const chunks: Uint8Array<ArrayBuffer>[] = []
 
-    const writer = new WritableStream<Uint8Array>({
+    const writer = new WritableStream<Uint8Array<ArrayBuffer>>({
       write: (chunk) => void chunks.push(chunk),
     })
 

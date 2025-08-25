@@ -8,7 +8,7 @@ import type { QrCode, QrCodeImageOptions } from '../index'
  * ========================================================================== */
 
 interface Bitmap {
-  data: Uint8Array,
+  data: Uint8Array<ArrayBuffer>,
   size: number,
 }
 
@@ -27,7 +27,7 @@ const PNG_IEND = new Uint8Array([ 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130 ]
 
 // Encode a PNG bitmap into a Uint8Array
 async function png(bitmap: Bitmap): Promise<Uint8Array> {
-  const chunks: Uint8Array[] = []
+  const chunks: Uint8Array<ArrayBuffer>[] = []
 
   // push the PNG header
   chunks.push(PNG_HEAD)
