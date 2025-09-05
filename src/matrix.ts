@@ -32,7 +32,7 @@ function fillFinders(matrix: number[][]): void {
   }
   for (let i = 0; i < 8; i++) {
     matrix[7]![i] = matrix[i]![7] =
-        matrix[7]![n - i - 1] = matrix[i]![n - 8] =
+      matrix[7]![n - i - 1] = matrix[i]![n - 8] =
         matrix[n - 8]![i] = matrix[n - 1 - i]![7] = 0x80
   }
 }
