@@ -1,6 +1,6 @@
 {
   "name": "@juit/qrcode",
-  "version": "1.0.69",
+  "version": "1.0.70",
   "description": "A modern QR code generator for JavaScript",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -28,7 +28,7 @@
   "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@plugjs/build": "^0.6.69",
+    "@plugjs/build": "^0.6.70",
     "@types/pdfkit": "^0.17.3",
     "fast-png": "^7.0.1",
     "pdfkit": "^0.17.2"
