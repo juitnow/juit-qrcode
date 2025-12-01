@@ -123,7 +123,7 @@ describe('QR Code as a SVG', () => {
         .end() // done with our simple doc
 
     // wait for PDFKit to actch up...
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       stream.on('error', reject)
       stream.on('finish', resolve)
     })
