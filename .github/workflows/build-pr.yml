@@ -7,4 +7,7 @@ jobs:
   build-pr:
     name: Build Pull Request
     uses: juitnow/workflows-public/.github/workflows/build.yml@main
-    secrets: inherit
+    secrets:
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      EMAIL_SERVER: ${{ secrets.EMAIL_SERVER }}
+      EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
