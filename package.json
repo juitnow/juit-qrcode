@@ -1,6 +1,6 @@
 {
   "name": "@juit/qrcode",
-  "version": "1.0.72",
+  "version": "1.0.74",
   "description": "A modern QR code generator for JavaScript",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
